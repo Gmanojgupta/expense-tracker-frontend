@@ -3,13 +3,7 @@ import { useSelector } from "react-redux";
 import { loginUser } from "../store/authSlice";
 import { RootState } from "../store/store";
 import { Navigate, useNavigate } from "react-router-dom";
-import {
-  Container,
-  Box,
-  TextField,
-  Typography,
-  Link,
-} from "@mui/material";
+import { Container, Box, TextField, Typography, Link } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useAppDispatch } from "../store/hooks";
 
@@ -33,7 +27,11 @@ const LoginPage: React.FC = () => {
     setLoading(true);
     try {
       await dispatch(loginUser({ email, password })).unwrap();
-      navigate(user?.role === "ADMIN" ? "/dashboard" : "/expenses");
+      if (user.role === "ADMIN" && token) {
+        navigate("/dashboard");
+      } else if (user.role === "EMPLOYEE" && token) {
+        navigate("/expenses");
+      }
     } catch (err: any) {
       setError(err.message || "Login failed");
     } finally {

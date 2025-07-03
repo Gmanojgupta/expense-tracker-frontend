@@ -64,10 +64,10 @@ const RegisterPage: React.FC = () => {
     setError(null);
 
     try {
-      const result = await dispatch(
+       await dispatch(
         registerUser({ name, email, password, confirmPassword: confirm })
       ).unwrap();
-      navigate(result.role === 'ADMIN' ? '/dashboard' : '/expenses');
+      navigate('/expenses');
     } catch (err: any) {
       setError(err.message || 'Registration failed');
     } finally {

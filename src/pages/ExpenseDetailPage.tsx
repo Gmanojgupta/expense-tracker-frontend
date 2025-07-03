@@ -228,7 +228,7 @@ const ExpenseDetailPage: React.FC = () => {
                   disabled={statusUpdating}
                   onClick={() => handleStatusUpdateDirect("APPROVED")}
                 >
-                  APPROVED
+                 Approve
                 </Button>
 
                 {/* REJECTED button */}
@@ -239,7 +239,7 @@ const ExpenseDetailPage: React.FC = () => {
                   disabled={statusUpdating}
                   onClick={() => openRemarksDialog("REJECTED")}
                 >
-                  REJECTED
+                 Reject
                 </Button>
 
                 {/* ONHOLD button */}
@@ -250,7 +250,7 @@ const ExpenseDetailPage: React.FC = () => {
                   disabled={statusUpdating}
                   onClick={() => openRemarksDialog("ONHOLD")}
                 >
-                  ONHOLD
+                  On Hold
                 </Button>
               </Box>
 

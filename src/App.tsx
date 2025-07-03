@@ -1,17 +1,14 @@
-import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import RegisterPage from "./pages/RegisterPage";
 import ExpensePage from "./pages/ExpensesPage";
 import { useAppSelector } from "./store/hooks";
-import Layout from "./components/Layout"; // Import Layout component
+import Layout from "./components/Layout";
 import ExpenseDetailPage from "./pages/ExpenseDetailPage";
 
 const App = () => {
   const user = useAppSelector((state) => state.auth.user);
-console.log('Test URL:', process.env.REACT_APP_API_URL);
-
 
   return (
     <Routes>
@@ -20,12 +17,19 @@ console.log('Test URL:', process.env.REACT_APP_API_URL);
       {user ? (
         <>
           <Route element={<Layout />}>
-            <Route path="*" element={<ExpensePage />} />
-            {user.role !== "ADMIN" && (
-              <Route path="/expenses" element={<ExpensePage />} />
+            {user.role === "ADMIN" ? (
+              <Route path="*" element={<DashboardPage />} />
+            ) : (
+              <Route path="*" element={<ExpensePage />} />
             )}
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/expenses/:id" element={<ExpenseDetailPage />} />
+            {user.role === "ADMIN" && (
+              <>
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/expenses/:id" element={<ExpenseDetailPage />} />
+              </>
+            )}
+            <Route path="/expenses" element={<ExpensePage />} />
+           
           </Route>
         </>
       ) : (
