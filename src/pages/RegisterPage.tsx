@@ -4,23 +4,32 @@ import { registerUser } from '../store/authSlice';
 import { RootState } from '../store/store';
 import { Navigate, useNavigate } from 'react-router-dom';
 import {
-  Container, Box, TextField, Button, Typography, Link} from '@mui/material';
+  Container,
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Link,
+  CircularProgress,
+} from '@mui/material';
 import { useAppDispatch } from '../store/hooks';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const { user, token } = useSelector((state: RootState) => state.auth);
   const dispatch = useAppDispatch();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({
     name: '',
     email: '',
     password: '',
-    confirm: ''
+    confirm: '',
   });
 
   if (user && token) {
@@ -29,45 +38,49 @@ const RegisterPage: React.FC = () => {
 
   const validateFields = () => {
     const errors: { [key: string]: string } = {};
-    
-    // Name Validation
+
     if (!name) errors.name = 'Name is required';
     else if (/\d/.test(name)) errors.name = 'Name cannot contain numbers';
-    
-    // Email Validation
+
     if (!email) errors.email = 'Email is required';
     else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
       errors.email = 'Please enter a valid email address';
     }
-    
-    // Password Validation
+
     if (!password) errors.password = 'Password is required';
-    
-    // Confirm Password Validation
+
     if (!confirm) errors.confirm = 'Please confirm your password';
     else if (password !== confirm) errors.confirm = 'Passwords do not match';
-    
+
     setFieldErrors(errors);
-    
     return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateFields()) return; // Prevent form submission if validation fails
+    if (!validateFields()) return;
+
+    setLoading(true);
+    setError(null);
 
     try {
-      const result = await dispatch(registerUser({ name, email, password, confirmPassword: confirm })).unwrap();
+      const result = await dispatch(
+        registerUser({ name, email, password, confirmPassword: confirm })
+      ).unwrap();
       navigate(result.role === 'ADMIN' ? '/dashboard' : '/expenses');
     } catch (err: any) {
       setError(err.message || 'Registration failed');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <Container maxWidth="xs">
       <Box mt={8} display="flex" flexDirection="column" alignItems="center">
-        <Typography component="h1" variant="h5">Register</Typography>
+        <Typography component="h1" variant="h5">
+          Register
+        </Typography>
         {error && <Typography color="error">{error}</Typography>}
         <Box component="form" mt={1} onSubmit={handleSubmit}>
           <TextField
@@ -76,7 +89,7 @@ const RegisterPage: React.FC = () => {
             fullWidth
             label="Name"
             value={name}
-            onChange={e => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             error={!!fieldErrors.name}
             helperText={fieldErrors.name}
           />
@@ -87,7 +100,7 @@ const RegisterPage: React.FC = () => {
             label="Email"
             type="email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             error={!!fieldErrors.email}
             helperText={fieldErrors.email}
           />
@@ -98,7 +111,7 @@ const RegisterPage: React.FC = () => {
             label="Password"
             type="password"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             error={!!fieldErrors.password}
             helperText={fieldErrors.password}
           />
@@ -109,7 +122,7 @@ const RegisterPage: React.FC = () => {
             label="Confirm Password"
             type="password"
             value={confirm}
-            onChange={e => setConfirm(e.target.value)}
+            onChange={(e) => setConfirm(e.target.value)}
             error={!!fieldErrors.confirm}
             helperText={fieldErrors.confirm}
           />
@@ -118,8 +131,9 @@ const RegisterPage: React.FC = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3 }}
+            disabled={loading}
           >
-            Register
+            {loading ? <CircularProgress size={24} color="inherit" /> : 'Register'}
           </Button>
           <Box mt={2}>
             <Link href="/login" variant="body2">
