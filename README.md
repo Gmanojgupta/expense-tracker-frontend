@@ -123,10 +123,10 @@ Then upload the `dist` or `build` folder depending on your bundler.
 
 ---
 
-## 🔗 Live Demo (Required)
+## 🔗 Live Demo
 
-* 🌐 **Frontend**: [http://23.23.28.100:3000](http://23.23.28.100:3000)
-* ⚙️ **Backend**: [http://23.23.28.100:3001](http://23.23.28.100:3001/)
+* 🌐 **Frontend**: [http://34.226.219.119:3000](http://34.226.219.119:3000)
+* ⚙️ **Backend**: [http://34.226.219.119:3001](http://34.226.219.119:3001)
 
 ---
 
