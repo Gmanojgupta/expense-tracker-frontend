@@ -1,11 +1,9 @@
----
-
 ```markdown
 # 💼 Expense Tracker Frontend
 
 Frontend client for the **Expense Tracker** web application where employees can submit expenses and admins can manage approvals and view analytics.
 
-Built using **React**, **TypeScript**, **Redux Toolkit**, UI library (Material UI).
+Built using **React**, **TypeScript**, **Redux Toolkit**, and **Material UI**.
 
 ---
 
@@ -28,8 +26,8 @@ Built using **React**, **TypeScript**, **Redux Toolkit**, UI library (Material U
 - **Redux Toolkit**
 - **React Router**
 - **Axios**
-- **Chart.js / Recharts** for dashboard
-- **UI Library** (Material-UI)
+- **Chart.js / Recharts**
+- **Material UI (MUI)**
 
 ---
 
@@ -38,13 +36,13 @@ Built using **React**, **TypeScript**, **Redux Toolkit**, UI library (Material U
 ```
 
 src/
-├── components/       # Shared UI components and Charts
-├── pages/            # Page-level views (Login, Register, Dashboard, etc.)
+├── components/       # Shared UI components and charts
+├── pages/            # Page-level views (Login, Dashboard, etc.)
 ├── store/            # Redux store and slices
-├── hooks/            # Typed redux hooks
-├── Api/            # Axios,
-├── App.tsx           # Routing and route guards
-└── index.tsx          # App entry
+├── hooks/            # Typed Redux hooks
+├── api/              # Axios instance and API calls
+├── App.tsx           # Main app with routing
+└── index.tsx         # App entry point
 
 ````
 
@@ -62,7 +60,7 @@ src/
 </Route>
 ````
 
-🔒 **Authenticated access only.** Employees and Admins see different views.
+🔒 **Authenticated access only.** Employees and admins see different views based on their roles.
 
 ---
 
@@ -83,10 +81,10 @@ npm install
 
 3. **Configure environment**
 
-Create a `.env` file:
+Create a `.env` file in the root with:
 
 ```env
-REACT_APP_API_URL=
+REACT_APP_API_URL=http://localhost:3001
 ```
 
 4. **Run locally**
@@ -99,7 +97,7 @@ npm start
 
 ## 🧪 Test Credentials
 
-Use these to login (mocked or connected to backend):
+Use these to log in (mocked or connected to backend):
 
 ### 👤 Admin
 
@@ -108,24 +106,26 @@ Use these to login (mocked or connected to backend):
 
 ### 👥 Employee
 
-* **Email**: `employee1@example.com` – `employee5@example.com`
-* **Password**: `employee1123` – `employee5123`
+* **Emails**: `employee1@example.com` – `employee5@example.com`
+* **Passwords**: `employee1123` – `employee5123`
 
 ---
 
 ## 📦 Deployment
 
-You can deploy to **Vercel**, **Netlify**, or any static hosting provider.
+You can deploy the build using **Vercel**, **Netlify**, or any static hosting provider.
+
+To create a production build:
 
 ```bash
 npm run build
 ```
 
-Then upload the `dist` or `build` folder depending on your bundler.
+Then upload the `build/` folder to your chosen platform.
 
 ---
 
-## 🔗 Live Demo (Required)
+## 🔗 Live Demo
 
 * 🌐 **Frontend**: [http://23.23.28.100:3000](http://23.23.28.100:3000)
 * ⚙️ **Backend**: [http://23.23.28.100:3001](http://23.23.28.100:3001/)
@@ -134,17 +134,13 @@ Then upload the `dist` or `build` folder depending on your bundler.
 
 ## 📌 Roles
 
-| Role     | Capabilities                                         |
-| -------- | ---------------------------------------------------- |
-| Employee | Submit/view own expenses                             |
-| Admin    | View all, approve/reject, access analytics dashboard |
+| Role     | Capabilities                                      |
+| -------- | ------------------------------------------------- |
+| Employee | Submit and view own expenses                      |
+| Admin    | View all expenses, approve/reject, view dashboard |
 
 ---
 
----
-
-## 👨‍💻 Developed by
+## 👨‍💻 Developed By
 
 **Manoj Gupta**
-
----
