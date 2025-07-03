@@ -1,5 +1,3 @@
----
-
 ```markdown
 # 💼 Expense Tracker Frontend
 
